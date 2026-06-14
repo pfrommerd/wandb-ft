@@ -1,0 +1,18 @@
+[package]
+name = "wandb-ft"
+version = "0.1.0"
+edition = "2024"
+description = "Free-threading-native PyO3 bindings for wandb"
+license = "MIT"
+
+[lib]
+name = "_wandb_ft"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.29.0", default-features = false, features = ["extension-module"] }
+numpy = "0.29.0"
+
+[profile.release]
+lto = true
+codegen-units = 1

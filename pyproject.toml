@@ -1,0 +1,30 @@
+[build-system]
+requires = ["maturin>=1.7,<2"]
+build-backend = "maturin"
+
+[project]
+name = "wandb-ft"
+version = "0.1.0"
+description = "Free-threading-native wandb bindings"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.24"]
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    # Declares that this wheel is compatible with the free-threaded build.
+    "Programming Language :: Python :: Free Threading :: 3 - Stable",
+]
+
+[tool.maturin]
+# Mixed Rust/Python layout: compiled module lives at wandb_ft._wandb_ft,
+# the pure-Python package (re-exports + docstrings) lives under python/.
+module-name = "wandb_ft._wandb_ft"
+python-source = "python"
+features = ["pyo3/extension-module"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.0",
+]
