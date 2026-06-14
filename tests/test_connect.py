@@ -5,7 +5,15 @@ import wandb_ft
 
 
 def test_exports():
-    assert set(wandb_ft.__all__) == {"Api", "Html", "Image", "Run", "Video", "connect"}
+    assert set(wandb_ft.__all__) == {
+        "Api",
+        "Artifact",
+        "Html",
+        "Image",
+        "Run",
+        "Video",
+        "connect",
+    }
 
 
 def test_connect_missing_key(tmp_path, monkeypatch):

@@ -23,9 +23,8 @@ pub fn read_api_key() -> Result<String, ApiError> {
     let path = netrc_path()
         .ok_or_else(|| ApiError::MissingApiKey("could not determine netrc path".into()))?;
 
-    let contents = std::fs::read_to_string(&path).map_err(|e| {
-        ApiError::MissingApiKey(format!("could not read {}: {e}", path.display()))
-    })?;
+    let contents = std::fs::read_to_string(&path)
+        .map_err(|e| ApiError::MissingApiKey(format!("could not read {}: {e}", path.display())))?;
 
     // Tokenize on whitespace/newlines. netrc is a flat stream of tokens where
     // `machine <name>`, `login <user>`, `password <secret>` come in pairs.

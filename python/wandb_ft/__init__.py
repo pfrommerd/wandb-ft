@@ -1,3 +1,3 @@
-from ._wandb_ft import Api, Html, Image, Run, Video, connect
+from ._wandb_ft import Api, Artifact, Html, Image, Run, Video, connect
 
-__all__ = ["Api", "Html", "Image", "Run", "Video", "connect"]
+__all__ = ["Api", "Artifact", "Html", "Image", "Run", "Video", "connect"]

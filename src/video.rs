@@ -80,7 +80,7 @@ pub fn encode_h264_mp4(
     {
         Ok(child) => child,
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-            return Err(VideoError::FfmpegNotFound)
+            return Err(VideoError::FfmpegNotFound);
         }
         Err(e) => return Err(e.into()),
     };

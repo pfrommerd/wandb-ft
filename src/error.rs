@@ -1,8 +1,8 @@
 use std::fmt::Display;
 use std::future::Future;
 
-use pyo3::exceptions::PyRuntimeError;
 use pyo3::PyErr;
+use pyo3::exceptions::PyRuntimeError;
 
 /// A custom error type that combines a Reqwest error with the response body.
 ///
@@ -68,6 +68,9 @@ pub enum ApiError {
 
     #[error("serialize data to json failed: {0}")]
     SerializeJson(#[from] serde_json::Error),
+
+    #[error("io error: {0}")]
+    Io(#[from] std::io::Error),
 
     #[error("no response from query: {0}")]
     NoResponse(String),

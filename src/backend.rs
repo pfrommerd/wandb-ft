@@ -1,8 +1,8 @@
-use base64::{prelude::BASE64_STANDARD as base64, Engine};
+use base64::{Engine, prelude::BASE64_STANDARD as base64};
 use graphql_client::GraphQLQuery;
 
 use crate::error::{ApiError, ReqwestBadResponse};
-use crate::gql::{upsert_bucket, UpsertBucket};
+use crate::gql::{UpsertBucket, upsert_bucket};
 
 const DEFAULT_API_URL: &str = "https://api.wandb.ai";
 
@@ -54,6 +54,8 @@ impl Backend {
         entity: String,
         project: String,
         name: String,
+        config: Option<String>,
+        summary: Option<String>,
     ) -> Result<(String, String, String), ApiError> {
         let variables = upsert_bucket::Variables {
             entity: Some(entity),
@@ -61,7 +63,7 @@ impl Backend {
             project: Some(project),
             id: None,
             commit: None,
-            config: None,
+            config,
             debug: None,
             description: None,
             display_name: None,
@@ -72,7 +74,7 @@ impl Backend {
             program: None,
             repo: None,
             state: None,
-            summary_metrics: None,
+            summary_metrics: summary,
             sweep: None,
             tags: None,
         };
@@ -111,7 +113,9 @@ impl Backend {
                 )
             })?;
         let project = bucket.project.ok_or_else(|| {
-            ApiError::NoResponse("UpsertBucket query returned data with no project in bucket".into())
+            ApiError::NoResponse(
+                "UpsertBucket query returned data with no project in bucket".into(),
+            )
         })?;
 
         Ok((project.entity.name, project.name, bucket.name))
